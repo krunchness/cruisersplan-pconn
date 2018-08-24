@@ -7,6 +7,8 @@
 				<div class="site-logo">
 					<img src="{{ asset('image/cruise-planner-logo.jpg') }}" width="400">
 				</div>
+
+				<p class="form-note">Thank you for your interest in our "<em><strong>CP CONNECT</strong></em>"! Please fill out the form to sign up for promotional alerts.</p>
 				<form method="POST" action="{{ route('cruisehome.store') }}">
 					{{ csrf_field() }}
 				  <div class="form-row">
@@ -67,6 +69,19 @@
 				    </select>
 				  </div>
 				  <button type="submit" class="btn btn-success">Submit</button>
+
+					</br>
+					</br>
+					<p class="form-note">
+						<span>Terms and Privacy can be found at</span>
+						<span>NEED page (cruisetheworldvacations.com)</span>
+					</p>	
+					<p class="form-note">
+						<span>You may revieve up to (4) msgs per month</span>
+						<span>You will receive an enrollment confirmation text.</span>
+						<span>Reply "STOP" to end or "HELP" for help to any message.</span>
+					</p>
+					<p class="form-note">Enrollment is not required for purchase of any product or service.</p>
 				</form>
 			</div>
 		</div>
