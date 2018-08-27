@@ -10,7 +10,7 @@
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>Dashboard</title>
+    <title>Cruise Planners - Dashboard</title>
 
     <!-- Fontfaces CSS-->
     <link href="{{ asset( 'css/dashboard/font-face.css' ) }}" rel="stylesheet" media="all">
