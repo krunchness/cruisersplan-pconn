@@ -5,7 +5,7 @@
 		<div class="col-lg-9">
 			<div class="form-container">
 				<div class="site-logo">
-					<img src="{{ asset('image/cruise-planner-logo.jpg') }}" width="400">
+					<img src="{{ asset('images/cruise-planner-logo.jpg') }}" width="400">
 				</div>
 
 				<p class="form-note">Thank you for your interest in our "<em><strong>CP CONNECT</strong></em>"! Please fill out the form to sign up for promotional alerts.</p>
@@ -36,11 +36,11 @@
 				      <label>Gender</label>
 				      <div>
 				      	  <div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="gender" value="option1" checked>
+							  <input class="form-check-input" type="radio" name="gender" value="Male" checked>
 							  <label class="form-check-label">Male</label>
 						  </div>
 						  <div class="form-check form-check-inline">
-							  <input class="form-check-input" type="radio" name="gender" value="option2">
+							  <input class="form-check-input" type="radio" name="gender" value="Female">
 							  <label class="form-check-label">Female</label>
 						  </div>
 				      </div>
