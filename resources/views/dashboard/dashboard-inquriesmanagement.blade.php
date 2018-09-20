@@ -1,5 +1,7 @@
 @extends('layouts.main-dashboard')
 
+@section('custom_html_metas')
+
 @section('content')
 <div class="row">
     <div class="col-md-12">
@@ -27,21 +29,33 @@
                 <button class="au-btn-filter">
                     <i class="zmdi zmdi-filter-list"></i>filters</button> -->
             </div>
-            <!-- <div class="table-data__tool-right">
-                <button class="au-btn au-btn-icon au-btn--green au-btn--small add-item-btn">
-                    <i class="zmdi zmdi-plus"></i>Add New User</button>
-                <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
+
+            <?php 
+                $csv_data = [
+                    'export_url' => route("inquiries.exportToCSV"),
+                    'token' => csrf_token(),
+                ];
+            ?>
+            <div class="table-data__tool-right">
+                <a href="{{route('inquiries.exportToCSV')}}" target="_blank" class="chosen-single"><button class="au-btn au-btn-icon au-btn--green au-btn--small export-csv-btn" export-data='{{ json_encode($csv_data) }}' download-file=''>
+                    <i class="zmdi zmdi-plus"></i>Export to CSV</button></a>
+                <!-- <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
                     <select class="js-select2" name="type">
                         <option selected="selected">Export</option>
                         <option value="">Option 1</option>
                         <option value="">Option 2</option>
                     </select>
                     <div class="dropDownSelect2"></div>
-                </div>
-            </div> -->
+                </div> -->
+            </div>
         </div>
 
         <input type="hidden" class="hidden-inputs" data-path="">
+        <label>Start Date</label>
+        <input type="date" name="start_date">
+        <label>End Date</label>
+        <input type="date" name="end_date">
+
         <div class="table-responsive table-responsive-data2">
             <table class="table table-data2" id="filesTable">
                 <thead>
@@ -158,6 +172,7 @@
         });
 
 
+
         
         $('.download-file').on('click', function(){
             var filename = $(this).attr('data-file');
@@ -165,6 +180,39 @@
             var path = $('.hidden-inputs').attr('data-path');
             window.location.href = path + '/' + filename;
         });
+
+        $.fn.dataTableExt.afnFiltering.push(
+    function( oSettings, aData, iDataIndex ) {
+        var iFini = document.getElementById('fini').value;
+        var iFfin = document.getElementById('ffin').value;
+        var iStartDateCol = 6;
+        var iEndDateCol = 7;
+ 
+        iFini=iFini.substring(6,10) + iFini.substring(3,5)+ iFini.substring(0,2);
+        iFfin=iFfin.substring(6,10) + iFfin.substring(3,5)+ iFfin.substring(0,2);
+ 
+        var datofini=aData[iStartDateCol].substring(6,10) + aData[iStartDateCol].substring(3,5)+ aData[iStartDateCol].substring(0,2);
+        var datoffin=aData[iEndDateCol].substring(6,10) + aData[iEndDateCol].substring(3,5)+ aData[iEndDateCol].substring(0,2);
+ 
+        if ( iFini === "" && iFfin === "" )
+        {
+            return true;
+        }
+        else if ( iFini <= datofini && iFfin === "")
+        {
+            return true;
+        }
+        else if ( iFfin >= datoffin && iFini === "")
+        {
+            return true;
+        }
+        else if (iFini <= datofini && iFfin >= datoffin)
+        {
+            return true;
+        }
+        return false;
+    }
+);
         
 
     </script>

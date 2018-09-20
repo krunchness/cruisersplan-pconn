@@ -21,18 +21,35 @@
                 
                 <li class="has-sub">
                     <a class="js-arrow" href="#">
-                        <i class="fas fa-users"></i>Inquiries
+                        <i class="fas fa-mail-bulk"></i>Inquiries
                         <span class="arrow">
                             <i class="fas fa-angle-down"></i>
                         </span>
                     </a>
                     <ul class="list-unstyled navbar__sub-list js-sub-list">
                         <li>
-                            <a href="">All Inquiries</a>
+                            <a href="{{ route('inquiries.showInquiries') }}">All Inquiries</a>
                         </li>
                         <!-- <li>
                             <a href="">Manage Roles</a>
                         </li> -->
+                       <!--  <li>
+                            <a href="forget-pass.html">Forget Password</a>
+                        </li> -->
+                    </ul>
+                </li>
+
+                <li class="has-sub">
+                    <a class="js-arrow" href="#">
+                        <i class="fas fa-users"></i>User Management
+                        <span class="arrow">
+                            <i class="fas fa-angle-down"></i>
+                        </span>
+                    </a>
+                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                        <li>
+                            <a href="{{ route('usermanagement.usersList') }}">All Users</a>
+                        </li>
                        <!--  <li>
                             <a href="forget-pass.html">Forget Password</a>
                         </li> -->

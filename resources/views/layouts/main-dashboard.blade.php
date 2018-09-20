@@ -8,7 +8,7 @@
     <meta name="description" content="Login">
     <meta name="author" content="Hau Nguyen">
     <meta name="keywords" content="au theme template">
-
+    @yield('custom_html_metas')
     <!-- Title Page-->
     <title>Cruise Planners - Dashboard</title>
 
