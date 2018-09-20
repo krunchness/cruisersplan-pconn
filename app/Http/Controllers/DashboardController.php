@@ -2,6 +2,7 @@
 
 namespace cruiserplan\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use cruiserplan\PersonInfo;
 
@@ -26,9 +27,15 @@ class DashboardController extends Controller
             'Content-Disposition' =>  'attachment',
         ];
 
-
-        $path = public_path('files\\') .'\\test.csv';
-        $fp = fopen($path , 'w');
+        $date = Carbon::now();
+        $filename = 'InquiryReports_'. $date->toDateString();
+        if ($_ENV['APP_ENV'] == 'production') {
+            $path = $_SERVER['DOCUMENT_ROOT'] . '/files/' . $filename . '.csv';
+        }else{
+            $path = public_path('files\\') . $filename . '.csv';
+        }
+            
+        $fp = fopen($path , 'wb');
 
         fputcsv($fp, array_keys($inquiries_data[0]));
 
@@ -39,6 +46,6 @@ class DashboardController extends Controller
         }
         fclose($fp);
 
-        return response()->download($path, '', $headers);
+        return response()->download($path, $filename .'.csv', $headers);
     }
 }
