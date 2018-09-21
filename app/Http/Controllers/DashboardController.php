@@ -48,4 +48,13 @@ class DashboardController extends Controller
 
         return response()->download($path, $filename .'.csv', $headers);
     }
+
+    public function deleteInquiry($id)
+    {
+        $personinfo = PersonInfo::findorFail($id);
+
+        $personinfo->delete();
+
+        return back();
+    }
 }

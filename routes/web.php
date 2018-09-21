@@ -26,6 +26,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function() {
     Route::get('/', 'DashboardController@showInquiries')->name('inquiries.showInquiries');
     Route::get('/export', 'DashboardController@exportToCSV')->name('inquiries.exportToCSV');
+    Route::delete('/destroyInquiry/{id}', 'DashboardController@deleteInquiry')->name('inquiries.destroyInquiry');
     Route::get('/user-management', 'UserController@usersList')->name('usermanagement.usersList');
     Route::post('/user-management', 'UserController@addUser')->name('usermanagement.addUser');
 });

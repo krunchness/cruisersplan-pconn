@@ -67,6 +67,7 @@
                         <th>Anniversary Date</th>
                         <th>Mobile No</th>
                         <th>Reference</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,6 +82,22 @@
                             <td>{{ ucfirst($inquiry->anniv_date) }}</td>
                             <td>{{ ucfirst($inquiry->mobile_no) }}</td>
                             <td>{{ ucfirst($inquiry->cpconnect_question) }}</td>
+                            <td>
+                            <div class="table-data-feature">
+                                <!-- <button class="item download-file" data-file=" " data-toggle="tooltip" data-placement="top" title="Download">
+                                    <i class="zmdi zmdi-cloud-download"></i>
+                                </button> -->
+                               <!--  <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                                    <i class="zmdi zmdi-edit"></i>
+                                </button> -->
+                                <button class="item delete-inquiry-btn" data-toggle="modal" data-name="{{ $inquiry->first_name . ' ' . $inquiry->last_name }}" delete-inquiry-id="{{ $inquiry->id }}" data-placement="top" title="Delete" data-target="#deleteInquiryModal">
+                                    <i class="zmdi zmdi-delete"></i>
+                                </button>
+                               <!--  <button class="item" data-toggle="tooltip" data-placement="top" title="More">
+                                    <i class="zmdi zmdi-more"></i>
+                                </button> -->
+                            </div>
+                        </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -158,6 +175,37 @@
 
 @endsection
 
+@section('modal')
+
+    <div class="modal fade" id="deleteInquiryModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-sm delete-modal" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModal">Delete File</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Are you Sure You want to Delete This Inquiry? 
+                        </br>
+                        Inquiry Name : <span class="inquiry-name"></span>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary confirm-delete-btn" data-id="">Confirm</button>
+                    <form action="" class="inquiry-delete-form" method="POST">
+                      {{ csrf_field() }}
+                      {{ method_field('DELETE') }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
 @section('custom-style')
     <link rel="stylesheet" type="text/css" href="{{ asset( 'vendor/remodal/remodal.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset( 'vendor/remodal/remodal-default-theme.css') }}">
@@ -172,6 +220,12 @@
         });
 
 
+
+        $('.confirm-delete-btn').on('click', function(){
+            var inquiry_id = $(this).attr('data-id');
+            $('.inquiry-delete-form').attr('action', '{{ route("inquiries.destroyInquiry", '') }}/' + inquiry_id);
+            $('.inquiry-delete-form').submit();
+        });
 
         
         $('.download-file').on('click', function(){

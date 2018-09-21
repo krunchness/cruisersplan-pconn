@@ -79,6 +79,8 @@
                 </div>
             </div>
             <!-- END MAIN CONTENT-->
+
+            @yield('modal')
             <!-- END PAGE CONTAINER-->
         </div>
 
