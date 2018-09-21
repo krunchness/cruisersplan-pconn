@@ -51,10 +51,10 @@
         </div>
 
         <input type="hidden" class="hidden-inputs" data-path="">
-        <label>Start Date</label>
+      <!--   <label>Start Date</label>
         <input type="date" name="start_date">
         <label>End Date</label>
-        <input type="date" name="end_date">
+        <input type="date" name="end_date"> -->
 
         <div class="table-responsive table-responsive-data2">
             <table class="table table-data2" id="filesTable">
