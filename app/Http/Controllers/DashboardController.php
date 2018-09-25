@@ -17,8 +17,17 @@ class DashboardController extends Controller
 
     public function exportToCSV(Request $request)
     {
+        
 
-    	$inquiries_data = PersonInfo::all()->toArray();
+        if (!empty($request->all())) {
+
+            $inquiries_data = PersonInfo::whereIn('id', [$request->inquiries_ids])->get()->toArray();
+
+        }else{
+
+            $inquiries_data = PersonInfo::all()->toArray();
+            
+        }
 
         unset($inquiries_data[0]['updated_at']);
 
@@ -81,7 +90,8 @@ class DashboardController extends Controller
                 'anniv_date' => $info->anniv_date,
                 'mobile_no' => $info->mobile_no,
                 'cpconnect_question' => $info->cpconnect_question,
-                'buttons' => $buttons
+                'buttons' => $buttons,
+                'inquiry_id' => $info->id
             ];
         }
         return response()->json($personDetails);

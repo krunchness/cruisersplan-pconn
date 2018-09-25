@@ -37,7 +37,7 @@
                 ];
             ?>
             <div class="table-data__tool-right">
-                <a href="{{route('inquiries.exportToCSV')}}" target="_blank" class="chosen-single"><button class="au-btn au-btn-icon au-btn--green au-btn--small export-csv-btn" export-data='{{ json_encode($csv_data) }}' download-file=''>
+                <a href="{{route('inquiries.exportToCSV')}}" target="_blank" class="chosen-single export-csv-btn"><button class="au-btn au-btn-icon au-btn--green au-btn--small " export-data='{{ json_encode($csv_data) }}' download-file=''>
                     <i class="zmdi zmdi-plus"></i>Export to CSV</button></a>
                 <!-- <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
                     <select class="js-select2" name="type">
@@ -50,7 +50,7 @@
             </div>
         </div>
 
-        <input type="hidden" class="hidden-inputs inquiries-datas" datefilter-json-path="{{ route('inquiries.getInquiryByDate') }}">
+        <input type="hidden" class="hidden-inputs inquiries-datas" datefilter-json-path="{{ route('inquiries.getInquiryByDate') }}" download-only-ids=''>
         <label>Start Date</label>
         <input type="date" name="start_date" class="start_date">
         <label>End Date</label>
