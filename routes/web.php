@@ -18,15 +18,23 @@
 
 Route::get('/', 'CruiseController@showCruiseForm')->name('cruisehome.index');
 Route::post('/store', 'CruiseController@storeCruiseForm')->name('cruisehome.store');
-
+Route::get('/forgot-password', 'CruiseController@resetPasswordForm');
+Route::match(['PUT', 'PATCH'], '/forgot-password', 'CruiseController@resetPasswordSubmit')->name('cruisehome.resetPassword');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function() {
+	//inquiries-management
     Route::get('/', 'DashboardController@showInquiries')->name('inquiries.showInquiries');
     Route::get('/export', 'DashboardController@exportToCSV')->name('inquiries.exportToCSV');
     Route::delete('/destroyInquiry/{id}', 'DashboardController@deleteInquiry')->name('inquiries.destroyInquiry');
+    Route::get('/getInquiryByDate', 'DashboardController@getInquiryByDate')->name('inquiries.getInquiryByDate');
+
+    //users-management
     Route::get('/user-management', 'UserController@usersList')->name('usermanagement.usersList');
     Route::post('/user-management', 'UserController@addUser')->name('usermanagement.addUser');
+    Route::match(['PUT', 'PATCH'], 'user-management/edit/{user}', 'UserController@editUser')->name('usermanagement.editUser');
+    Route::delete('/user-management/delete/{user}', 'UserController@deleteUser')->name('usermanagement.deleteUser');
+    
 });

@@ -16,7 +16,7 @@ class UserController extends Controller
 
     public function addUser(Request $request)
     {
-       // dd($request->all());
+       
 
        User::create([
             'name' => $request->name,
@@ -26,5 +26,41 @@ class UserController extends Controller
        ]);
 
        return redirect()->route('usermanagement.usersList');
+    }
+
+    public function editUser(Request $request, User $user)
+    {
+        
+
+        if ($request->password != '' || !empty($request->password)) {
+
+          $user->update([
+              'username' => $request->username,
+              'name' => $request->name,
+              'email' => $request->email,
+          ]);
+
+        }else{
+
+          $user->update([
+              'username' => $request->username,
+              'name' => $request->name,
+              'email' => $request->email,
+              'password' => bcrypt($request->password)
+          ]);
+
+        }
+
+        return back();
+        
+    }
+
+    public function deleteUser($id)
+    {
+      $user = User::findorFail($id);
+
+      $user->delete();
+
+      return back();
     }
 }

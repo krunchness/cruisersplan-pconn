@@ -50,16 +50,17 @@
             </div>
         </div>
 
-        <input type="hidden" class="hidden-inputs" data-path="">
-      <!--   <label>Start Date</label>
-        <input type="date" name="start_date">
+        <input type="hidden" class="hidden-inputs inquiries-datas" datefilter-json-path="{{ route('inquiries.getInquiryByDate') }}">
+        <label>Start Date</label>
+        <input type="date" name="start_date" class="start_date">
         <label>End Date</label>
-        <input type="date" name="end_date"> -->
+        <input type="date" name="end_date" class="end_date">
 
         <div class="table-responsive table-responsive-data2">
             <table class="table table-data2" id="filesTable">
                 <thead>
                     <tr>
+                        <th>Created Date</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Gender</th>
@@ -73,6 +74,7 @@
                 <tbody>
                     @foreach($inquiries as $inquiry)
                         <tr class="tr-shadow">
+                            <td>{{ ucfirst($inquiry->created_at) }}</td>
                             <td>{{ ucfirst($inquiry->first_name) }}</td>
                             <td>{{ ucfirst($inquiry->last_name) }}</td>
                             <td>
@@ -213,11 +215,8 @@
 @section('custom-script')
     <script src="{{ asset( 'vendor/remodal/remodal.min.js') }}"></script>
     <script>
-        var inst = $('[data-remodal-id=modal]').remodal();
 
-        $('.add-item-btn').on('click',function(){
-            inst.open();
-        });
+
 
 
 
@@ -235,38 +234,8 @@
             window.location.href = path + '/' + filename;
         });
 
-        $.fn.dataTableExt.afnFiltering.push(
-    function( oSettings, aData, iDataIndex ) {
-        var iFini = document.getElementById('fini').value;
-        var iFfin = document.getElementById('ffin').value;
-        var iStartDateCol = 6;
-        var iEndDateCol = 7;
- 
-        iFini=iFini.substring(6,10) + iFini.substring(3,5)+ iFini.substring(0,2);
-        iFfin=iFfin.substring(6,10) + iFfin.substring(3,5)+ iFfin.substring(0,2);
- 
-        var datofini=aData[iStartDateCol].substring(6,10) + aData[iStartDateCol].substring(3,5)+ aData[iStartDateCol].substring(0,2);
-        var datoffin=aData[iEndDateCol].substring(6,10) + aData[iEndDateCol].substring(3,5)+ aData[iEndDateCol].substring(0,2);
- 
-        if ( iFini === "" && iFfin === "" )
-        {
-            return true;
-        }
-        else if ( iFini <= datofini && iFfin === "")
-        {
-            return true;
-        }
-        else if ( iFfin >= datoffin && iFini === "")
-        {
-            return true;
-        }
-        else if (iFini <= datofini && iFfin >= datoffin)
-        {
-            return true;
-        }
-        return false;
-    }
-);
+        // var table = $('#filesTable').dataTable();
+
         
 
     </script>

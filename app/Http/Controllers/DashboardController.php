@@ -57,4 +57,33 @@ class DashboardController extends Controller
 
         return back();
     }
+
+    public function getInquiryByDate(Request $request)
+    {   
+        $start_date = new Carbon($request->start_date);
+        $end_date = new Carbon($request->end_date);
+        $personinfo = PersonInfo::whereBetween('created_at', [$start_date, $end_date])->get();
+
+        $personDetails = [];
+        foreach ($personinfo as $key => $info) {
+
+            $buttons = '<div class="table-data-feature">
+                            <button class="item delete-inquiry-btn" data-toggle="modal" data-name="'. $info->first_name . ' ' . $info->last_name .'" delete-inquiry-id="'. $info->id .'" data-placement="top" title="Delete" data-target="#deleteInquiryModal">
+                                <i class="zmdi zmdi-delete"></i>
+                            </button>
+                        </div>';
+            $personDetails[] = [
+                'created_at' => $info->created_at,
+                'first_name' => $info->first_name,
+                'last_name' => $info->last_name,
+                'gender' => $info->gender,
+                'birth_date' => $info->birth_date,
+                'anniv_date' => $info->anniv_date,
+                'mobile_no' => $info->mobile_no,
+                'cpconnect_question' => $info->cpconnect_question,
+                'buttons' => $buttons
+            ];
+        }
+        return response()->json($personDetails);
+    }
 }
