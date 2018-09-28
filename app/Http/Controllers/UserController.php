@@ -4,6 +4,7 @@ namespace cruiserplan\Http\Controllers;
 
 use Illuminate\Http\Request;
 use cruiserplan\User;
+use cruiserplan\UserRole;
 
 class UserController extends Controller
 {
@@ -12,6 +13,21 @@ class UserController extends Controller
     	$users = User::all();
 
     	return view('dashboard.dashboard-usermanagement', compact(['users']));
+    }
+
+    public function rolesList()
+    {
+      $roles = UserRole::all();
+
+      return view('dashboard.dashboard-rolesmanagement', compact(['roles']));
+    }
+
+    public function addRole(Request $request)
+    {
+        // dd($request->all());
+        UserRole::create($request->all());
+
+        return redirect()->route('usermanagement.rolesList');
     }
 
     public function addUser(Request $request)
@@ -23,6 +39,7 @@ class UserController extends Controller
             'email' => $request->email,
             'username' => $request->username,
             'password' => bcrypt($request->password),
+            'user_role' => $request->user_role
        ]);
 
        return redirect()->route('usermanagement.usersList');
