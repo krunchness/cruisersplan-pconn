@@ -4,6 +4,7 @@ namespace cruiserplan\Http\Controllers;
 
 use Illuminate\Http\Request;
 use cruiserplan\PersonInfo;
+use cruiserplan\User;
 class CruiseController extends Controller
 {
     public function showCruiseForm()
@@ -36,5 +37,31 @@ class CruiseController extends Controller
     
 
     	return back();
+    }
+
+    public function resetPasswordForm()
+    {
+        return view('auth.reset-password');
+    }
+
+    public function resetPasswordSubmit(Request $request)
+    {
+        
+
+        $user = User::where('username', '=', $request->username)->first();
+
+
+        if (empty($user)) {
+            
+
+            return back()->with('error-msg', 'No Existing User');
+        }else{
+            
+            $user->update([
+                'password' => bcrypt($request->password),
+            ]);
+
+            return redirect('/login');
+        }
     }
 }

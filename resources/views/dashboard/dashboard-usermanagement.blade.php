@@ -80,13 +80,13 @@
                                 <!-- <button class="item download-file" data-file="	" data-toggle="tooltip" data-placement="top" title="Download">
                                     <i class="zmdi zmdi-cloud-download"></i>
                                 </button> -->
-                                <!-- <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                                <button class="item edit-user-btn" data-toggle="tooltip" data-placement="top" title="Edit" user-data="{{ json_encode($user) }}" update-path="{{ route('usermanagement.editUser', $user->id) }}">
                                     <i class="zmdi zmdi-edit"></i>
                                 </button>
-                                <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                <button class="item delete-user-btn" data-toggle="modal" data-placement="top" title="Delete" delete-user-id="{{ $user->id }}" delete-user-name="{{ $user->username }}" data-target="#deleteUserModal">
                                     <i class="zmdi zmdi-delete"></i>
                                 </button>
-                                <button class="item" data-toggle="tooltip" data-placement="top" title="More">
+                                <!-- <button class="item" data-toggle="tooltip" data-placement="top" title="More">
                                     <i class="zmdi zmdi-more"></i>
                                 </button> -->
                             </div>
@@ -121,10 +121,18 @@
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-3">
-                            <label for="text-input" class=" form-control-label">Name</label>
+                            <label for="text-input" class=" form-control-label">First Name</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <input type="text" name="name" placeholder="Name" class="form-control">
+                            <input type="text" name="first_name" placeholder="First Name" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="text-input" class=" form-control-label">Last Name</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <input type="text" name="last_name" placeholder="Last Name" class="form-control">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -169,8 +177,106 @@
   </div>
 </div>
 
+@endsection
 
+@section('modal')
+    <div data-remodal-id="edit_user">
+      <button data-remodal-action="close" class="remodal-close"></button>
+      <div class="remodal-container">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong>Edit User</strong>
+                </div>
+                <div class="card-body card-block">
+                    <form action="" method="post" class="form-horizontal edit_user_form">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="_method" value="PUT">
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">Username</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" name="username" placeholder="Username" class="form-control edit_username_input">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">Name</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="text" name="name" placeholder="Name" class="form-control edit_name_input">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="text-input" class=" form-control-label">Email Address</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="email" name="email" placeholder="Email Address" class="form-control edit_email_input">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="textarea-input" class=" form-control-label">Password</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <input type="password" name="password" placeholder="Password" class="form-control">
+                            </div>
+                        </div>
+                        <!-- <div class="row form-group">
+                            <div class="col col-md-3">
+                                <label for="select" class=" form-control-label">Role</label>
+                            </div>
+                            <div class="col-12 col-md-9">
+                                <select name="user_role" id="select" class="form-control">
+                                    <option>Please select Role</option>
+                                </select>
+                            </div>
+                        </div> -->
+                        <div class="card-footer">
+                            <button type="reset" class="btn btn-danger btn-sm">
+                                <i class="fa fa-ban"></i> Reset
+                            </button>
+                            <span class="modal-submit-spaces"></span>
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                <i class="fa fa-dot-circle-o"></i> Submit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
 
+    <div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-sm delete-modal" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModal">Delete User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Are you Sure You want to Delete This User? 
+                        </br>
+                        Username : <span class="deleteuser-name"></span>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary confirm-delete-btn" data-id="">Confirm</button>
+                    <form action="" class="user-delete-form" method="POST">
+                      {{ csrf_field() }}
+                      {{ method_field('DELETE') }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('custom-style')
@@ -180,20 +286,23 @@
 @section('custom-script')
     <script src="{{ asset( 'vendor/remodal/remodal.min.js') }}"></script>
     <script>
-        var inst = $('[data-remodal-id=modal]').remodal();
 
-        $('.add-item-btn').on('click',function(){
-            inst.open();
+        $('.delete-user-btn').on('click', function(){
+
+            var username = $(this).attr('delete-user-name');
+            var user_id = $(this).attr('delete-user-id'); 
+            $('.deleteuser-name').text(username);
+            $('.confirm-delete-btn').attr('data-id', user_id);
+            // $('[data-remodal-id=deleteUser/z/Modal]').remodal().open();
+        });
+
+        $('.confirm-delete-btn').on('click', function(){
+            var user_id = $(this).attr('data-id');
+            $('.user-delete-form').attr('action', '{{ route("usermanagement.deleteUser", '') }}/' + user_id);
+            $('.user-delete-form').submit();
         });
 
 
-        
-        $('.download-file').on('click', function(){
-            var filename = $(this).attr('data-file');
-            // alert(filename);
-            var path = $('.hidden-inputs').attr('data-path');
-            window.location.href = path + '/' + filename;
-        });
         
 
     </script>
