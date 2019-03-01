@@ -39,22 +39,27 @@
                     </ul>
                 </li>
 
-                <li class="has-sub">
-                    <a class="js-arrow" href="#">
-                        <i class="fas fa-users"></i>User Management
-                        <span class="arrow">
-                            <i class="fas fa-angle-down"></i>
-                        </span>
-                    </a>
-                    <ul class="list-unstyled navbar__sub-list js-sub-list">
-                        <li>
-                            <a href="{{ route('usermanagement.usersList') }}">All Users</a>
-                        </li>
-                       <!--  <li>
-                            <a href="forget-pass.html">Forget Password</a>
-                        </li> -->
-                    </ul>
-                </li>
+                @if(auth()->user()->hasRole->role_name == 'System Admin')
+                    <li class="has-sub">
+                        <a class="js-arrow" href="#">
+                            <i class="fas fa-users"></i>User Management
+                            <span class="arrow">
+                                <i class="fas fa-angle-down"></i>
+                            </span>
+                        </a>
+                        <ul class="list-unstyled navbar__sub-list js-sub-list">
+                            <li>
+                                <a href="{{ route('usermanagement.usersList') }}">All Users</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('usermanagement.rolesList') }}">Manage Roles</a>
+                            </li>
+                           <!--  <li>
+                                <a href="forget-pass.html">Forget Password</a>
+                            </li> -->
+                        </ul>
+                    </li>
+                @endif
               
                 <!-- <li>
                     <a href="#">

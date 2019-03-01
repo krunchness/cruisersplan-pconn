@@ -9,7 +9,7 @@
 				</div>
 
 				<p class="form-note">Thank you for your interest in our "<em><strong>CP CONNECT</strong></em>"! Please fill out the form to sign up for promotional alerts.</p>
-				<form method="POST" action="{{ route('cruisehome.store') }}">
+				<form method="POST" action="{{ route('cruisehome.store') }}" id="cruiseform">
 					{{ csrf_field() }}
 				  <div class="form-row">
 				    <div class="form-group col-md-6">
@@ -68,7 +68,7 @@
 				      <option value="print-ads">Print Ads</option>
 				    </select>
 				  </div>
-				  <button type="submit" class="btn btn-success">Submit</button>
+				  <button type="submit" class="btn btn-success cruiseform-submit-btn">Submit</button>
 
 					</br>
 					</br>
@@ -92,6 +92,7 @@
 
 	<link rel="stylesheet" type="text/css" href="{{ asset('vendor/gijgo/css/gijgo.min.css') }}">
 	<script type="text/javascript" src="{{ asset('vendor/gijgo/js/gijgo.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('vendor/moment.js/moment.min.js') }}"></script>
 @endsection
 
 @section('footer-custom')
@@ -102,6 +103,32 @@
 
         $('#anniv-picker').datepicker({
         	uiLibrary: 'bootstrap4'
+        });
+
+
+        $('#cruiseform').submit(function(e){
+        	// e.preventDefault();
+
+        	var errorCounter = 0;
+        	if (moment($('#anniv-picker').val(), 'MM/DD/YYYY',true).isValid() == false) {
+        		alert('Please Use The DatePicker for Anniversary Date To Have a Correct Format');
+
+        		errorCounter++;
+
+        		return false;
+        	}
+
+        	if (moment($('#bday-picker').val(), 'MM/DD/YYYY',true).isValid() == false) {
+        		alert('Please Use The DatePicker for Birth Date To Have a Correct Format');
+
+        		errorCounter++;
+        		return false;
+        	}
+
+        	if (errorCounter == 0) {
+        		$('.cruiseform-submit-btn').submit();
+        	}
+		    
         });
     </script>
 @endsection

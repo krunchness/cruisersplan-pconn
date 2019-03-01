@@ -32,9 +32,16 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function() {
     Route::get('/getInquiryByDate', 'DashboardController@getInquiryByDate')->name('inquiries.getInquiryByDate');
 
     //users-management
-    Route::get('/user-management', 'UserController@usersList')->name('usermanagement.usersList');
-    Route::post('/user-management', 'UserController@addUser')->name('usermanagement.addUser');
-    Route::match(['PUT', 'PATCH'], 'user-management/edit/{user}', 'UserController@editUser')->name('usermanagement.editUser');
-    Route::delete('/user-management/delete/{user}', 'UserController@deleteUser')->name('usermanagement.deleteUser');
+
+    Route::group(['middleware' => 'admin.access'], function() {
+        
+        Route::get('/user-management', 'UserController@usersList')->name('usermanagement.usersList');
+        Route::post('/user-management', 'UserController@addUser')->name('usermanagement.addUser');
+        Route::match(['PUT', 'PATCH'], 'user-management/edit/{user}', 'UserController@editUser')->name('usermanagement.editUser');
+        Route::delete('/user-management/delete/{user}', 'UserController@deleteUser')->name('usermanagement.deleteUser');
+        Route::get('/role-management', 'UserController@rolesList')->name('usermanagement.rolesList');
+        Route::post('/role-management', 'UserController@addRole')->name('usermanagement.addRole');
+        
+    });
     
 });
